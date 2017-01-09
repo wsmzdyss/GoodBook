@@ -25,7 +25,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="800dp"
+        android:layout_width="3000dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorPrimary"
