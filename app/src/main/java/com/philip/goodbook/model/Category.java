@@ -3,7 +3,7 @@ package com.philip.goodbook.model;
 import android.widget.ImageView;
 
 /**
- * Created by admin on 2017/1/6.
+ * Created by philip.zhang on 2017/1/6.
  */
 
 public class Category {

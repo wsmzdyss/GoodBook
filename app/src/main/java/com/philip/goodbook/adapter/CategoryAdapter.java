@@ -13,7 +13,7 @@ import com.philip.goodbook.model.Category;
 import java.util.List;
 
 /**
- * Created by admin on 2017/1/6.
+ * Created by philip.zhang on 2017/1/6.
  */
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {

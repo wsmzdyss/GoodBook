@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@color/red">
 
             <ImageView
                 android:id="@+id/leftmenu_img"
@@ -25,24 +25,26 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="3000dp"
+        android:layout_width="290dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="200dp">
 
             <TextView
+                android:id="@+id/title_dl_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="ZDY" />
+                android:text="Title" />
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_margin="5dp"
             android:id="@+id/category_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
