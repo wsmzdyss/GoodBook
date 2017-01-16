@@ -35,6 +35,8 @@ public class Book {
     private String online;
     private String bytime;
 
+    private boolean collection;
+
     public Book(String title, String catalog, String tags, String sub1, String sub2, String img, String reading, String online, String bytime) {
         this.title = title;
         this.catalog = catalog;
@@ -45,6 +47,7 @@ public class Book {
         this.reading = reading;
         this.online = online;
         this.bytime = bytime;
+        this.collection = false;
     }
 
     public String getTitle() {
@@ -117,5 +120,13 @@ public class Book {
 
     public void setBytime(String bytime) {
         this.bytime = bytime;
+    }
+
+    public boolean isCollection() {
+        return collection;
+    }
+
+    public void setCollection(boolean collection) {
+        this.collection = collection;
     }
 }

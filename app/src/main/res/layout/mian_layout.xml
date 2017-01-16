@@ -23,7 +23,7 @@
                 android:layout_width="@dimen/top_icon"
                 android:layout_height="@dimen/top_icon"
                 android:padding="@dimen/top_padding"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/menu" />
         </RelativeLayout>
 
         <FrameLayout
