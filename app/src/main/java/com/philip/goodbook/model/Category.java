@@ -1,18 +1,12 @@
 package com.philip.goodbook.model;
 
-import android.widget.ImageView;
-
 /**
- * Created by philip.zhang on 2017/1/6.
+ * Created by admin on 2017/1/16.
  */
 
 public class Category {
     private String name;
-
     private int icon;
-
-    public Category() {
-    }
 
     public Category(String name, int icon) {
         this.name = name;

@@ -5,27 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/main_fl"
+    <LinearLayout
+        android:id="@+id/main_ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/red">
+            android:background="@color/red"
+            android:clipToPadding="true"
+            android:fitsSystemWindows="true">
 
             <ImageView
                 android:id="@+id/leftmenu_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_width="@dimen/top_icon"
+                android:layout_height="@dimen/top_icon"
+                android:padding="@dimen/top_padding"
                 android:src="@mipmap/ic_launcher" />
         </RelativeLayout>
-    </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/content_fl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="290dp"
+        android:layout_width="@dimen/left_dr_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
@@ -33,7 +42,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="@dimen/title_height">
 
             <TextView
                 android:id="@+id/title_dl_tv"
@@ -44,9 +53,9 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:layout_margin="5dp"
-            android:id="@+id/category_rv"
+            android:id="@+id/category_rcv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/top_padding" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

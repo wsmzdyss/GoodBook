@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/item_ct_height"
     android:orientation="horizontal">
 
     <ImageView
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/top_padding"
         android:id="@+id/categoryImg_item"
-        android:layout_width="60dp"
-        android:layout_height="90dp"
+        android:layout_width="@dimen/item_ct_img_width"
+        android:layout_height="@dimen/item_ct_img_height"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/categoryName_item"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/top_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:ems="1"
-        android:text="武侠" />
+        android:text="@string/picture_242" />
 
 </LinearLayout>
