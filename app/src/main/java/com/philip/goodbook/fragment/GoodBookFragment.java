@@ -14,10 +14,19 @@ import android.view.ViewGroup;
 import com.philip.goodbook.MainActivity;
 import com.philip.goodbook.R;
 import com.philip.goodbook.adapter.GoodBookAdapter;
+import com.philip.goodbook.model.BaseEntity;
 import com.philip.goodbook.model.Book;
+import com.philip.goodbook.model.Category;
+import com.philip.goodbook.network.RetroiftService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by philip.zhang on 2017/1/16.
@@ -36,6 +45,7 @@ public class GoodBookFragment extends Fragment {
     public GoodBookAdapter goodBookAdapter;
 
     private Handler handler;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

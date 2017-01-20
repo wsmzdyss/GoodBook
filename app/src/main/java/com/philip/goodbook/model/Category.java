@@ -1,31 +1,37 @@
 package com.philip.goodbook.model;
 
 /**
- * Created by admin on 2017/1/16.
+ * Created by philip.zhang on 2017/1/16.
  */
 
-public class Category {
-    private String name;
-    private int icon;
+public class Category implements Comparable<Category> {
 
-    public Category(String name, int icon) {
-        this.name = name;
-        this.icon = icon;
+    /**
+     * id : 242
+     * catalog : 中国文学
+     */
+
+    private String id;
+    private String catalog;
+
+    public String getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCatalog() {
+        return catalog;
     }
 
-    public int getIcon() {
-        return icon;
+    public void setCatalog(String catalog) {
+        this.catalog = catalog;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    @Override
+    public int compareTo(Category category) {
+        return this.getId().compareTo(category.getId());
     }
 }
