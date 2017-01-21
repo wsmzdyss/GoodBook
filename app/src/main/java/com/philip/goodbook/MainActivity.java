@@ -23,14 +23,14 @@ import com.philip.goodbook.adapter.CategoryAdapter;
 import com.philip.goodbook.fragment.GoodBookFragment;
 import com.philip.goodbook.model.BaseEntity;
 import com.philip.goodbook.model.Category;
+import com.philip.goodbook.network.BaseTask;
 import com.philip.goodbook.network.RetroiftService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
     private CategoryAdapter categoryAdapter;
 
-    private List<Category> categoryList;
+    private List<Category> mcategoryList;
 
     private TextView titleDlTv;
 
-    public final static int REFRESH = 0;
+    public final static int REFRESH_MENU = 0;
 
     public final static int GOODBOOK_FRAGMENT = 1;
 
@@ -62,7 +62,14 @@ public class MainActivity extends AppCompatActivity {
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Log.d("TAG", "what = : " + msg.what);
             switch (msg.what) {
+                case REFRESH_MENU:
+                    Collections.sort(mcategoryList);
+                    mcategoryList.remove(mcategoryList.size() - 1);
+                    categoryAdapter.refreshDataSet(mcategoryList);
+                    categoryAdapter.notifyDataSetChanged();
+                    break;
                 case GOODBOOK_FRAGMENT:
                     replaceFragment(goodBookFragment);
                     break;
@@ -81,75 +88,29 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initData();
         setListener();
+        getCategoryFromNet();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
-        RetroiftService retroiftService = retrofit.create(RetroiftService.class);
-        Call<BaseEntity<List<Category>>> call = retroiftService.getCategories(APPKEY);
-        call.enqueue(new Callback<BaseEntity<List<Category>>>() {
-            @Override
-            public void onResponse(Call<BaseEntity<List<Category>>> call, Response<BaseEntity<List<Category>>> response) {
-                BaseEntity<List<Category>> baseEntity = response.body();
-                Log.d("TAG", baseEntity.getReason());
-                Log.d("TAG", baseEntity.getResultcode());
-                if (baseEntity.getReason().equals("success") && baseEntity.getResultcode().equals("200")) {
-                    categoryList = baseEntity.getResult();
-                }
-            }
+//        call.enqueue(new Callback<BaseEntity<List<Category>>>() {
+//            @Override
+//            public void onResponse(Call<BaseEntity<List<Category>>> call, Response<BaseEntity<List<Category>>> response) {
+//                BaseEntity<List<Category>> baseEntity = response.body();
+//                Log.d("TAG", baseEntity.getReason());
+//                Log.d("TAG", baseEntity.getResultcode());
+//                if (baseEntity.getReason().equals("success") && baseEntity.getResultcode().equals("200")) {
+//                    mcategoryList = baseEntity.getResult();
+//                    handler.sendEmptyMessage(REFRESH_MENU);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BaseEntity<List<Category>>> call, Throwable t) {
+//            }
+//        });
 
-            @Override
-            public void onFailure(Call<BaseEntity<List<Category>>> call, Throwable t) {
-            }
-        });
 
-        for (Category c : categoryList) {
-            Log.d("TAG", c.getId());
-            Log.d("TAG", c.getCatalog());
-        }
-
-        categoryAdapter.notifyDataSetChanged();
     }
 
     private void initData() {
-//        categoryList = new ArrayList<>();
-//        Category category;
-//        category = new Category(getResources().getString(R.string.picture_242), R.drawable.picture242);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_243), R.drawable.picture243);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_244), R.drawable.picture244);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_245), R.drawable.picture245);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_246), R.drawable.picture246);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_247), R.drawable.picture247);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_248), R.drawable.picture248);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_249), R.drawable.picture249);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_250_251), R.drawable.picture250_251);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_252), R.drawable.picture252);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_253), R.drawable.picture253);
-//        categoryList.add(category);
-//
-//        category = new Category(getResources().getString(R.string.picture_254_end), R.drawable.picture254_end);
-//        categoryList.add(category);
-
-        //Collections.sort(categoryList);
-
 
     }
 
@@ -172,15 +133,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setListener() {
-        categoryList = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(categoryList);
+        mcategoryList = new ArrayList<>();
         categoryRv.setLayoutManager(new GridLayoutManager(this, 3));
+        categoryAdapter = new CategoryAdapter(mcategoryList);
         categoryRv.setAdapter(categoryAdapter);
 
         menuImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        categoryAdapter.setItemOnClickListener(new CategoryAdapter.ItemOnClickListener() {
+            @Override
+            public void ItemOnClick(View v, int position) {
+                updateListData(v, position);
             }
         });
     }
@@ -196,6 +164,29 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.content_fl, fragment).commit();
+    }
+
+    private void getCategoryFromNet() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        RetroiftService retroiftService = retrofit.create(RetroiftService.class);
+        Call<BaseEntity<List<Category>>> call = retroiftService.getCategories(APPKEY);
+
+        new BaseTask<List<Category>>(MainActivity.this, call).handleResponse(new BaseTask.ResponseListener<List<Category>>() {
+
+            @Override
+            public void onSuccess(List<Category> categoryList) {
+                mcategoryList = categoryList;
+                handler.sendEmptyMessage(REFRESH_MENU);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateListData(View v, int position) {
 
     }
 
