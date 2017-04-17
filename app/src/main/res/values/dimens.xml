@@ -1,9 +1,12 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <!-- main -->
     <dimen name="left_dr_width">290dp</dimen>
     <dimen name="title_height">200dp</dimen>
     <dimen name="top_icon">45dp</dimen>
     <dimen name="top_padding">5dp</dimen>
+
+    <!-- item -->
     <dimen name="item_ct_height">100dp</dimen>
     <dimen name="item_ct_img_height">90dp</dimen>
     <dimen name="item_ct_img_width">60dp</dimen>
@@ -18,4 +21,15 @@
     <dimen name="item_gd_title_textSize">18sp</dimen>
     <dimen name="item_gd_sub_textSize">12sp</dimen>
     <dimen name="item_text_padding">3dp</dimen>
+
+    <!-- login -->
+    <dimen name="margin_top_login">70dp</dimen>
+    <dimen name="margin_slogan_login">25dp</dimen>
+    <dimen name="width_button_login">65dp</dimen>
+    <dimen name="margin_button_login">5dp</dimen>
+    <dimen name="margin_edit_login">35dp</dimen>
+    <dimen name="width_edit_login">320dp</dimen>
+    <dimen name="hight_edit_login">50dp</dimen>
+    <dimen name="hight_tab_login">3dp</dimen>
+
 </resources>

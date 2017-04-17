@@ -6,6 +6,8 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#CE3D3A</color>
     <color name="black">#000000</color>
-    <color name="bg_gray">#EDEDED</color>
+    <color name="bg_gray">#E3E3E3</color>
+    <color name="text_black">#4D4D4D</color>
+
 
 </resources>

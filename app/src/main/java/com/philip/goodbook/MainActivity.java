@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView categoryRv;
 
-    private CategoryAdapter categoryAdapter;
+    private CategoryAdapter mCategoryAdapter;
 
-    private List<Category> mcategoryList;
+    private List<Category> mCategoryList;
 
     private TextView titleDlTv;
 
@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TAG", "what = : " + msg.what);
             switch (msg.what) {
                 case REFRESH_MENU:
-                    Collections.sort(mcategoryList);
-                    mcategoryList.remove(mcategoryList.size() - 1);
-                    categoryAdapter.refreshDataSet(mcategoryList);
-                    categoryAdapter.notifyDataSetChanged();
+                    Collections.sort(mCategoryList);
+                    mCategoryList.remove(mCategoryList.size() - 1);
+                    mCategoryAdapter.refreshDataSet(mCategoryList);
+                    mCategoryAdapter.notifyDataSetChanged();
                     break;
                 case GOODBOOK_FRAGMENT:
                     replaceFragment(goodBookFragment);
@@ -89,24 +89,6 @@ public class MainActivity extends AppCompatActivity {
         initData();
         setListener();
         getCategoryFromNet();
-
-//        call.enqueue(new Callback<BaseEntity<List<Category>>>() {
-//            @Override
-//            public void onResponse(Call<BaseEntity<List<Category>>> call, Response<BaseEntity<List<Category>>> response) {
-//                BaseEntity<List<Category>> baseEntity = response.body();
-//                Log.d("TAG", baseEntity.getReason());
-//                Log.d("TAG", baseEntity.getResultcode());
-//                if (baseEntity.getReason().equals("success") && baseEntity.getResultcode().equals("200")) {
-//                    mcategoryList = baseEntity.getResult();
-//                    handler.sendEmptyMessage(REFRESH_MENU);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BaseEntity<List<Category>>> call, Throwable t) {
-//            }
-//        });
-
 
     }
 
@@ -133,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setListener() {
-        mcategoryList = new ArrayList<>();
+        mCategoryList = new ArrayList<>();
         categoryRv.setLayoutManager(new GridLayoutManager(this, 3));
-        categoryAdapter = new CategoryAdapter(mcategoryList);
-        categoryRv.setAdapter(categoryAdapter);
+        mCategoryAdapter = new CategoryAdapter(mCategoryList);
+        categoryRv.setAdapter(mCategoryAdapter);
 
         menuImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        categoryAdapter.setItemOnClickListener(new CategoryAdapter.ItemOnClickListener() {
+        mCategoryAdapter.setItemOnClickListener(new CategoryAdapter.ItemOnClickListener() {
             @Override
             public void ItemOnClick(View v, int position) {
                 updateListData(v, position);
@@ -175,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(List<Category> categoryList) {
-                mcategoryList = categoryList;
+                mCategoryList = categoryList;
                 handler.sendEmptyMessage(REFRESH_MENU);
             }
 

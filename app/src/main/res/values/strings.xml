@@ -1,28 +1,25 @@
 <resources>
+
+    <!-- menu -->
     <string name="app_name">GoodBook</string>
-
     <string name="picture_242">中国文学</string>
-
     <string name="picture_243">外国文学</string>
-
     <string name="picture_244">儿童文学</string>
-
     <string name="picture_245">散文</string>
-
     <string name="picture_246">经典名著</string>
-
     <string name="picture_247">小说</string>
-
     <string name="picture_248">历史</string>
-
     <string name="picture_249">教育</string>
-
     <string name="picture_250_251">成功励志</string>
-
     <string name="picture_252">人物传记</string>
-
     <string name="picture_253">心理学</string>
-
     <string name="picture_254_end">其他</string>
+
+    <!-- login -->
+    <string name="title_login">荐\t好\t书</string>
+    <string name="slogan_login">遇见好书、读好书！</string>
+    <string name="login_login">登录</string>
+    <string name="register_login">注册</string>
+
 
 </resources>
