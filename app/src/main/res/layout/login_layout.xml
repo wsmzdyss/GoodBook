@@ -12,18 +12,7 @@
         android:gravity="center_horizontal"
         android:text="@string/title_login"
         android:textColor="@color/red"
-        android:textSize="48sp" />
-
-    <TextView
-        android:id="@+id/slogan_login_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_login_tv"
-        android:layout_marginTop="@dimen/margin_slogan_login"
-        android:gravity="center_horizontal"
-        android:text="@string/slogan_login"
-        android:textColor="@color/text_black"
-        android:textSize="25sp" />
+        android:textSize="@dimen/title_size_sp" />
 
     <LinearLayout
         android:id="@+id/button_login_ll"
@@ -35,41 +24,55 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="@dimen/width_button_login"
+        <TextView
+            android:id="@+id/loginfm_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_button_login"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:text="@string/login_login"
-            android:textColor="@color/red"
-            android:textSize="25sp" />
+            android:textColor="@drawable/loginfm_selector"
+            android:textSize="@dimen/text_size_sp" />
 
-        <Button
-            android:id="@+id/register_btn"
-            android:layout_width="@dimen/width_button_login"
+        <TextView
+            android:id="@+id/registerfm_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_button_login"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:text="@string/register_login"
-            android:textColor="@color/red"
-            android:textSize="25sp" />
+            android:textColor="@drawable/loginfm_selector"
+            android:textSize="@dimen/text_size_sp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/tab_login_img"
-        android:layout_width="@dimen/width_button_login"
+        android:layout_width="@dimen/width_tab_login"
         android:layout_height="@dimen/hight_tab_login"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="-5dp"
         android:layout_alignStart="@+id/button_login_ll"
         android:layout_below="@+id/button_login_ll"
         android:src="@color/red" />
 
     <FrameLayout
         android:id="@+id/fragment_login_fl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/tab_login_img" />
+
+    <TextView
+        android:id="@+id/slogan_login_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:gravity="center_horizontal"
+        android:text="@string/slogan_login"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_size_sp"
+        android:layout_below="@+id/title_login_tv"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

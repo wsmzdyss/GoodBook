@@ -7,11 +7,25 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/username_loginfm"
+        android:id="@+id/nickname_regifm"
         android:layout_width="@dimen/width_edit_login"
         android:layout_height="@dimen/hight_edit_login"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/username_regifm"
         android:layout_marginTop="@dimen/margin_edit_login"
+        android:background="@drawable/edit_selector"
+        android:hint="@string/nickname_login"
+        android:maxLines="1"
+        android:paddingStart="@dimen/margin_hint_login"
+        android:textColorHint="@color/text_gray" />
+
+    <EditText
+        android:id="@+id/username_regifm"
+        android:layout_width="@dimen/width_edit_login"
+        android:layout_height="@dimen/hight_edit_login"
+        android:layout_below="@+id/nickname_regifm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_slogan_login"
         android:background="@drawable/edit_selector"
         android:hint="@string/username_login"
         android:maxLines="1"
@@ -19,28 +33,28 @@
         android:textColorHint="@color/text_gray" />
 
     <EditText
-        android:id="@+id/password_loginfm"
+        android:id="@+id/password_regifm"
         android:layout_width="@dimen/width_edit_login"
         android:layout_height="@dimen/hight_edit_login"
-        android:layout_below="@+id/username_loginfm"
+        android:layout_below="@+id/username_regifm"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_slogan_login"
         android:background="@drawable/edit_selector"
         android:hint="@string/password_login"
-        android:inputType="textPassword"
         android:maxLines="1"
         android:paddingStart="@dimen/margin_hint_login"
         android:textColorHint="@color/text_gray" />
 
     <Button
-        android:id="@+id/login_btn_loginfm"
+        android:id="@+id/register_btn_regifm"
         android:layout_width="@dimen/width_edit_login"
         android:layout_height="@dimen/hight_edit_login"
-        android:layout_below="@+id/password_loginfm"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/password_regifm"
+        android:layout_below="@+id/password_regifm"
         android:layout_marginTop="@dimen/margin_edit_login"
         android:background="@drawable/button_selector"
-        android:text="@string/login_login"
+        android:text="@string/register_login"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_sp" />
+
 </RelativeLayout>

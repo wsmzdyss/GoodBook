@@ -20,6 +20,9 @@
     <string name="slogan_login">遇见好书、读好书！</string>
     <string name="login_login">登录</string>
     <string name="register_login">注册</string>
+    <string name="username_login">用户名</string>
+    <string name="password_login">密码</string>
+    <string name="nickname_login">昵称</string>
 
 
 </resources>

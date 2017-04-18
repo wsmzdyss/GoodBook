@@ -23,13 +23,17 @@
     <dimen name="item_text_padding">3dp</dimen>
 
     <!-- login -->
-    <dimen name="margin_top_login">70dp</dimen>
-    <dimen name="margin_slogan_login">25dp</dimen>
+    <dimen name="text_size_sp">22sp</dimen>
+    <dimen name="title_size_sp">40sp</dimen>
+    <dimen name="margin_top_login">60dp</dimen>
+    <dimen name="margin_slogan_login">20dp</dimen>
     <dimen name="width_button_login">65dp</dimen>
-    <dimen name="margin_button_login">5dp</dimen>
+    <dimen name="width_tab_login">48dp</dimen>
+    <dimen name="margin_button_login">6dp</dimen>
+    <dimen name="margin_hint_login">10dp</dimen>
     <dimen name="margin_edit_login">35dp</dimen>
-    <dimen name="width_edit_login">320dp</dimen>
-    <dimen name="hight_edit_login">50dp</dimen>
+    <dimen name="width_edit_login">280dp</dimen>
+    <dimen name="hight_edit_login">45dp</dimen>
     <dimen name="hight_tab_login">3dp</dimen>
 
 </resources>

@@ -97,7 +97,7 @@
             android:layout_width="@dimen/item_gd_img_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@color/red"
+            android:background="@drawable/button_selector"
             android:text="京东商城"
             android:textColor="@color/white" />
 
@@ -106,7 +106,7 @@
             android:layout_width="@dimen/item_gd_img_width"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@color/red"
+            android:background="@drawable/button_selector"
             android:text="当当网"
             android:textColor="@color/white" />
 
@@ -115,7 +115,7 @@
             android:layout_width="@dimen/item_gd_img_width"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@color/red"
+            android:background="@drawable/button_selector"
             android:text="亚马逊"
             android:textColor="@color/white" />
 
