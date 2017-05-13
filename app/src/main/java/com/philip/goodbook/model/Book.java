@@ -1,10 +1,12 @@
 package com.philip.goodbook.model;
 
+import java.io.Serializable;
+
 /**
  * Created by admin on 2017/1/16.
  */
 
-public class Book {
+public class Book implements Serializable {
 
 
     /**
@@ -128,5 +130,21 @@ public class Book {
 
     public void setCollection(boolean collection) {
         this.collection = collection;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", catalog='" + catalog + '\'' +
+                ", tags='" + tags + '\'' +
+                ", sub1='" + sub1 + '\'' +
+                ", sub2='" + sub2 + '\'' +
+                ", img='" + img + '\'' +
+                ", reading='" + reading + '\'' +
+                ", online='" + online + '\'' +
+                ", bytime='" + bytime + '\'' +
+                ", collection=" + collection +
+                '}';
     }
 }

@@ -1,12 +1,13 @@
 package com.philip.goodbook.network;
 
-import com.philip.goodbook.model.BaseEntity;
-import com.philip.goodbook.model.Category;
-
-import java.util.List;
+import com.philip.goodbook.model.BookBaseEntity;
+import com.philip.goodbook.model.CgBaseEntity;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -15,5 +16,10 @@ import retrofit2.http.Query;
 
 public interface RetroiftService {
     @GET("catalog")
-    Call<BaseEntity<List<Category>>> getCategories(@Query("key") String key);
+    Call<CgBaseEntity> getCategories(@Query("key") String key);
+
+    @FormUrlEncoded
+    @POST("query")
+    Call<BookBaseEntity> getBookList(@Field("catalog_id") String id, @Field("pn") String
+            pn, @Field("rn") String rn, @Field("key") String key);
 }

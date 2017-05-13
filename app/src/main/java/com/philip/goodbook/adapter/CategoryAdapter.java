@@ -25,8 +25,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.categoryList = categoryList;
     }
 
-    public void refreshDataSet(List<Category> categoryList) {
+    public void refreshData(List<Category> categoryList) {
         this.categoryList = categoryList;
+        this.notifyDataSetChanged();
     }
 
     public interface ItemOnClickListener {

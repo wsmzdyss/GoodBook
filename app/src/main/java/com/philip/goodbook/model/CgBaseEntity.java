@@ -6,7 +6,7 @@ import java.util.List;
  * Created by philip.zhang on 2017/1/20.
  */
 
-public class BaseEntity<E> {
+public class CgBaseEntity {
 
     /**
      * resultcode : 200
@@ -18,7 +18,7 @@ public class BaseEntity<E> {
     private String resultcode;
     private String reason;
     private int error_code;
-    private E result;
+    private List<Category> result;
 
     public String getResultcode() {
         return resultcode;
@@ -44,13 +44,11 @@ public class BaseEntity<E> {
         this.error_code = error_code;
     }
 
-    public E getResult() {
+    public List<Category> getResult() {
         return result;
     }
 
-    public void setResult(E result) {
+    public void setResult(List<Category> result) {
         this.result = result;
     }
-
-
 }

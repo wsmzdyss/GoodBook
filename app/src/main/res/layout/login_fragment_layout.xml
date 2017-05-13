@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@color/bg_gray"
+                android:orientation="vertical">
 
     <EditText
         android:id="@+id/username_loginfm"
@@ -16,7 +16,8 @@
         android:hint="@string/username_login"
         android:maxLines="1"
         android:paddingStart="@dimen/margin_hint_login"
-        android:textColorHint="@color/text_gray" />
+        android:textColorHint="@color/text_gray"
+        android:textCursorDrawable="@drawable/cusor_shape"/>
 
     <EditText
         android:id="@+id/password_loginfm"
@@ -30,7 +31,8 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:paddingStart="@dimen/margin_hint_login"
-        android:textColorHint="@color/text_gray" />
+        android:textColorHint="@color/text_gray"
+        android:textCursorDrawable="@drawable/cusor_shape"/>
 
     <Button
         android:id="@+id/login_btn_loginfm"
@@ -42,5 +44,5 @@
         android:background="@drawable/button_selector"
         android:text="@string/login_login"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_sp" />
+        android:textSize="@dimen/text_size_sp"/>
 </RelativeLayout>

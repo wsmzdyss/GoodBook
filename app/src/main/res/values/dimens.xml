@@ -36,4 +36,14 @@
     <dimen name="hight_edit_login">45dp</dimen>
     <dimen name="hight_tab_login">3dp</dimen>
 
+    <!-- detail -->
+    <dimen name="detail_img_width">120dp</dimen>
+    <dimen name="detail_img_height">180dp</dimen>
+    <dimen name="margin_top_detail">23dp</dimen>
+    <dimen name="margin_left_detail">20dp</dimen>
+    <dimen name="detail_sub2_height">280dp</dimen>
+    <dimen name="detail_pay_icon">45dp</dimen>
+
+
+
 </resources>

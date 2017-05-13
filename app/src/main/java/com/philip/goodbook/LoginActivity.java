@@ -1,14 +1,10 @@
 package com.philip.goodbook;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +15,7 @@ import com.philip.goodbook.fragment.RegisterFragment;
  * Created by philip.zhang on 2017/4/18.
  */
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     private TextView loginFmBtn;
     private TextView registerFmBtn;
     private FragmentManager mFmManager;
@@ -98,12 +94,12 @@ public class LoginActivity extends Activity {
 
     private void startAnimator(int index) {
         if (index == LOGIN_FRAGMENT && onLoginFm == false) {
-            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(tabImg, "translationX", 150, 0);
-            objAnimator.setDuration(500);
+            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(tabImg, "translationX", 148, 0);
+            objAnimator.setDuration(400);
             objAnimator.start();
         } else if (index == REGISTER_FRAGMENT && onLoginFm == true) {
-            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(tabImg, "translationX", 0, 150);
-            objAnimator.setDuration(500);
+            ObjectAnimator objAnimator = ObjectAnimator.ofFloat(tabImg, "translationX", 0, 148);
+            objAnimator.setDuration(400);
             objAnimator.start();
         }
     }
