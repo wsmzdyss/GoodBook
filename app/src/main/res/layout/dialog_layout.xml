@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="@dimen/dialog_width"
+                android:layout_height="@dimen/dialog_height"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center">
+
+    <TextView
+        android:id="@+id/content_dialog_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:text="网络连接出错，请检查网络连接"
+        android:textSize="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/yes_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="是"
+            android:textColor="@color/red"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/no_dialog_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/yes_dialog_btn"
+            android:background="@android:color/transparent"
+            android:text="否"
+            android:textColor="@color/red"
+            android:textSize="18dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

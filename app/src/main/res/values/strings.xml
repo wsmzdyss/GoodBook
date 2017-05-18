@@ -1,7 +1,7 @@
 <resources>
 
     <!-- menu -->
-    <string name="app_name">GoodBook</string>
+    <string name="app_name">荐好书</string>
     <string name="picture_242">中国文学</string>
     <string name="picture_243">外国文学</string>
     <string name="picture_244">儿童文学</string>

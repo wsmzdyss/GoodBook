@@ -27,23 +27,28 @@
     <dimen name="title_size_sp">40sp</dimen>
     <dimen name="margin_top_login">60dp</dimen>
     <dimen name="margin_slogan_login">20dp</dimen>
+    <dimen name="margin_slogan2_login">15dp</dimen>
     <dimen name="width_button_login">65dp</dimen>
     <dimen name="width_tab_login">48dp</dimen>
     <dimen name="margin_button_login">6dp</dimen>
     <dimen name="margin_hint_login">10dp</dimen>
     <dimen name="margin_edit_login">35dp</dimen>
     <dimen name="width_edit_login">280dp</dimen>
-    <dimen name="hight_edit_login">45dp</dimen>
-    <dimen name="hight_tab_login">3dp</dimen>
+    <dimen name="height_edit_login">45dp</dimen>
+    <dimen name="height_tab_login">3dp</dimen>
 
     <!-- detail -->
     <dimen name="detail_img_width">120dp</dimen>
     <dimen name="detail_img_height">180dp</dimen>
     <dimen name="margin_top_detail">23dp</dimen>
     <dimen name="margin_left_detail">20dp</dimen>
-    <dimen name="detail_sub2_height">280dp</dimen>
+    <dimen name="detail_sub2_height">300dp</dimen>
     <dimen name="detail_pay_icon">45dp</dimen>
 
+    <!-- dialog -->
+    <dimen name="dialog_width">240dp</dimen>
+    <dimen name="dialog_height">150dp</dimen>
+    <dimen name="train_border_width">6dip</dimen>
 
 
 </resources>

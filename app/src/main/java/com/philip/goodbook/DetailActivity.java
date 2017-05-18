@@ -65,8 +65,7 @@ public class DetailActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("bookDetail");
-        Log.d("AAA", "Detail    " + book.toString());
-        Glide.with(this).load(book.getImg()).into(img);
+        Glide.with(DetailActivity.this).load(book.getImg()).error(R.drawable.default_img).placeholder(R.drawable.default_img).into(img);
         title.setText(book.getTitle());
         sub1.setText(book.getSub1());
         catlog.setText(book.getCatalog());

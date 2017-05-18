@@ -22,4 +22,5 @@ public interface RetroiftService {
     @POST("query")
     Call<BookBaseEntity> getBookList(@Field("catalog_id") String id, @Field("pn") String
             pn, @Field("rn") String rn, @Field("key") String key);
+
 }

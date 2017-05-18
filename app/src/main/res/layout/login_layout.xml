@@ -50,7 +50,7 @@
     <ImageView
         android:id="@+id/tab_login_img"
         android:layout_width="@dimen/width_tab_login"
-        android:layout_height="@dimen/hight_tab_login"
+        android:layout_height="@dimen/height_tab_login"
         android:layout_marginTop="10dp"
         android:layout_marginStart="-5dp"
         android:layout_alignStart="@+id/button_login_ll"

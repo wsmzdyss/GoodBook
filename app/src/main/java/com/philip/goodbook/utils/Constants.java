@@ -29,4 +29,6 @@ public class Constants {
 
     public static String PICTURE_254_END= "其他";
 
+    public final static String baseUrl = "http://192.168.191.3:8084/";
+
 }
