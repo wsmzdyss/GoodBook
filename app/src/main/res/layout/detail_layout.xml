@@ -30,6 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="微观历史"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/detail_collection"
                 android:textSize="25sp"/>
 
             <ImageView
@@ -110,7 +112,8 @@
             android:layout_alignParentLeft="true"
             android:background="@drawable/button_selector"
             android:text="京东商城"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/detail_bt_dd"
@@ -119,7 +122,8 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_selector"
             android:text="当当网"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/detail_bt_amz"
@@ -128,7 +132,8 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/button_selector"
             android:text="亚马逊"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
 
 
     </RelativeLayout>

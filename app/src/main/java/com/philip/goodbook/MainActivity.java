@@ -8,10 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -101,6 +101,8 @@ public class MainActivity extends BaseActivity {
 
     public final static int REFRESH_USER = 3;
 
+    public final static int REFRESH_BOOKLIST_FC = 4;
+
     private final static String url = "http://apis.juhe.cn/goodbook/";
 
     private final static String APPKEY = "0964124c815408f5e817855200d61cf8";
@@ -136,8 +138,8 @@ public class MainActivity extends BaseActivity {
                     replaceFragment(goodBookFragment);
                     break;
                 case REFRESH_BOOKLIST:
-                    dissmissProgressBar();
-                    goodBookFragment.updateList(mBookList);
+                    dismissProgressBar();
+                    getCollectFromDB(username, mBookList);
                     break;
 
                 case REFRESH_USER: {
@@ -160,6 +162,10 @@ public class MainActivity extends BaseActivity {
                     }
                     break;
                 }
+                case REFRESH_BOOKLIST_FC:
+                    goodBookFragment.updateList(mBookList);
+                    goodBookFragment.swipeRL.setRefreshing(false);
+                    break;
 
                 default:
                     break;
@@ -302,47 +308,51 @@ public class MainActivity extends BaseActivity {
                 final int age = Integer.parseInt(editAge.getText().toString().trim());
                 final String sign = editSign.getText().toString().trim();
                 final int sex = rgSex.getCheckedRadioButtonId() == R.id.female_sex_mainfl ? 0 : 1;
-                User user = new User();
-                user.setUsername(username);
-                user.setNickname(nickname);
-                user.setAge(age);
-                user.setSex(sex);
-                user.setSign(sign);
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory
-                                (GsonConverterFactory.create())
-                        .build();
-                GoodBookService goodBookService = retrofit.create(GoodBookService.class);
-                Call<String> call = goodBookService.modifyUser(user);
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Log.d("AAA", "Modify   response ===   " + response.body());
-                        if (response.body().equals("success")) {
-                            User user = new User();
-                            user.setUsername(username);
-                            user.setNickname(nickname);
-                            user.setAge(age);
-                            user.setSex(sex);
-                            user.setSign(sign);
-                            Message msg = Message.obtain();
-                            msg.what = REFRESH_USER;
-                            msg.obj = user;
-                            handler.sendMessage(msg);
-                            Log.d("AAA", "user ===   " + user.toString());
+                if (TextUtils.isEmpty(sign) || TextUtils.isEmpty(nickname) || TextUtils.isEmpty(editAge.getText().toString().trim())) {
+                    ToastUtil.showToast(MainActivity.this, "信息不能为空");
+                } else {
+                    User user = new User();
+                    user.setUsername(username);
+                    user.setNickname(nickname);
+                    user.setAge(age);
+                    user.setSex(sex);
+                    user.setSign(sign);
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory
+                                    (GsonConverterFactory.create())
+                            .build();
+                    GoodBookService goodBookService = retrofit.create(GoodBookService.class);
+                    Call<String> call = goodBookService.modifyUser(user);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.d("AAA", "Modify   response ===   " + response.body());
+                            if (response.body().equals("success")) {
+                                User user = new User();
+                                user.setUsername(username);
+                                user.setNickname(nickname);
+                                user.setAge(age);
+                                user.setSex(sex);
+                                user.setSign(sign);
+                                Message msg = Message.obtain();
+                                msg.what = REFRESH_USER;
+                                msg.obj = user;
+                                handler.sendMessage(msg);
+                                Log.d("AAA", "user ===   " + user.toString());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.d("AAA", "Modify   onFailure   " + t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("AAA", "Modify   onFailure   " + t.getMessage());
+                        }
+                    });
 
 
-                editRl.setVisibility(View.INVISIBLE);
-                categoryRv.setVisibility(View.VISIBLE);
-                isEdit = false;
+                    editRl.setVisibility(View.INVISIBLE);
+                    categoryRv.setVisibility(View.VISIBLE);
+                    isEdit = false;
+                }
             }
         });
     }
@@ -377,7 +387,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void getCategoryFromNet() {
+    public void getCategoryFromNet() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetroiftService retroiftService = retrofit.create(RetroiftService.class);
@@ -401,7 +411,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void getListFromNet(String id, String pn, String rn) {
+    public void getListFromNet(String id, String pn, String rn) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetroiftService retroiftService = retrofit.create(RetroiftService.class);
@@ -425,7 +435,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void getUserFromDB(String username) {
+    public void getUserFromDB(String username) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory
                         (GsonConverterFactory.create())
@@ -447,6 +457,38 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.d("AAA", "QueryUser    Failure  " + t.getMessage());
+            }
+        });
+    }
+
+    public void getCollectFromDB(String username, final List<Book> books) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory
+                        (GsonConverterFactory.create())
+                .build();
+        GoodBookService goodBookService = retrofit.create(GoodBookService.class);
+        Call<List<Book>> call = goodBookService.queryCollection(username);
+
+        call.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                List<Book> list = response.body();
+                for (Book book : list) {
+                    for (Book book1 : books) {
+                        if (book.getTitle().equals(book1.getTitle())) {
+                            book1.setCollection(true);
+                            Log.d("AAA", "setCollection     " + book1.getTitle() + "  is collection");
+                        }
+                    }
+                }
+                mBookList = books;
+                Log.d("AAA","mBookList is       "+mBookList.get(2).isCollection());
+                handler.sendEmptyMessage(REFRESH_BOOKLIST_FC);
+            }
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+
             }
         });
     }
@@ -475,7 +517,7 @@ public class MainActivity extends BaseActivity {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void dissmissProgressBar() {
+    private void dismissProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
     }
 

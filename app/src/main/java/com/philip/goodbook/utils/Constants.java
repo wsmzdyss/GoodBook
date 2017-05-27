@@ -29,6 +29,9 @@ public class Constants {
 
     public static String PICTURE_254_END= "其他";
 
-    public final static String baseUrl = "http://192.168.191.3:8084/";
+    public final static String baseUrl = "http://192.168.42.69:8080/";
+
+    public final static String APPKEY = "0964124c815408f5e817855200d61cf8";
+
 
 }

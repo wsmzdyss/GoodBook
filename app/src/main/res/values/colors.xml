@@ -10,5 +10,12 @@
     <color name="text_black">#4D4D4D</color>
     <color name="text_gray">#CDC9C9</color>
 
+    <array name="red_color_sequence">
+        <item>@color/red</item>
+        <item>@color/red</item>
+        <item>@color/red</item>
+        <item>@color/red</item>
+    </array>
+
 
 </resources>

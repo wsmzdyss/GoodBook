@@ -82,6 +82,11 @@ public class GoodBookAdapter extends RecyclerView.Adapter<GoodBookAdapter.ViewHo
         holder.sub.setText(book.getSub2());
         holder.reading.setText(book.getReading());
         holder.bytime.setText(book.getBytime());
+        if(book.isCollection()){
+            holder.collection.setImageResource(R.drawable.collection_selected);
+        }else {
+            holder.collection.setImageResource(R.drawable.collection_normal);
+        }
         retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

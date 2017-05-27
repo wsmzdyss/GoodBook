@@ -3,6 +3,8 @@ package com.philip.goodbook.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +16,23 @@ import android.view.ViewGroup;
 import com.philip.goodbook.DetailActivity;
 import com.philip.goodbook.MainActivity;
 import com.philip.goodbook.R;
-import com.philip.goodbook.adapter.CategoryAdapter;
 import com.philip.goodbook.adapter.GoodBookAdapter;
 import com.philip.goodbook.model.Book;
+import com.philip.goodbook.model.BookBaseEntity;
+import com.philip.goodbook.network.BaseTask;
+import com.philip.goodbook.network.GoodBookService;
+import com.philip.goodbook.network.RetroiftService;
+import com.philip.goodbook.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by philip.zhang on 2017/1/16.
@@ -37,7 +50,33 @@ public class GoodBookFragment extends Fragment {
 
     public GoodBookAdapter goodBookAdapter;
 
+    private final static String url = "http://apis.juhe.cn/goodbook/";
+
+    private final static String APPKEY = "0964124c815408f5e817855200d61cf8";
+
+    private static final int REFRESH_GOODBOOK = 0;
+
+    private static final int REFRESH_BOOKLIST_FC = 1;
+
     private int count = 0;
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d("TAG", "what = : " + msg.what);
+            switch (msg.what) {
+                case REFRESH_GOODBOOK:
+                    getCollectFromDB(mActivity.username, bookList);
+                    break;
+                case REFRESH_BOOKLIST_FC:
+                    goodBookAdapter.refreshData(bookList);
+                    swipeRL.setRefreshing(false);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,25 +92,7 @@ public class GoodBookFragment extends Fragment {
         swipeRL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //handler.sendEmptyMessage(0);
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initData();
-                                goodBookAdapter.notifyDataSetChanged();
-                                swipeRL.setRefreshing(false);
-                            }
-                        });
-                    }
-                }).start();
+                getListFromNet(mActivity.currentCata, "0", "30");
             }
         });
         goodBookAdapter = new GoodBookAdapter(mActivity, bookList);
@@ -84,6 +105,7 @@ public class GoodBookFragment extends Fragment {
                 Intent intent = new Intent(mActivity, DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bookDetail", book);
+                intent.putExtra("username", mActivity.username);
                 if (book != null) {
                     Log.d("AAA", "Fragment" + book.toString());
                     intent.putExtras(bundle);
@@ -118,6 +140,61 @@ public class GoodBookFragment extends Fragment {
 
     }
 
+    public void getListFromNet(String id, String pn, String rn) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetroiftService retroiftService = retrofit.create(RetroiftService.class);
+        Call<BookBaseEntity> call = retroiftService.getBookList(id, pn, rn, APPKEY);
+
+        new BaseTask(getActivity()).bookHandleResponse(call, new BaseTask.ResponseListener<Book>() {
+            @Override
+            public void onSuccess(List<Book> t) {
+                Log.d("AAA", "BOOK SUCCESS");
+                //Log.d("AAA", "BOOK SUCCESS" + t.toString());
+                bookList = t;
+                handler.sendEmptyMessage(REFRESH_GOODBOOK);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("AAA", "BOOK Failure");
+                Log.d("AAA", "BOOK Throwable  ===  " + t.getMessage());
+            }
+        });
+
+    }
+
+    public void getCollectFromDB(String username, final List<Book> books) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory
+                        (GsonConverterFactory.create())
+                .build();
+        GoodBookService goodBookService = retrofit.create(GoodBookService.class);
+        Call<List<Book>> call = goodBookService.queryCollection(username);
+
+        call.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                List<Book> list = response.body();
+                for (Book book : list) {
+                    for (Book book1 : books) {
+                        if (book.getTitle().equals(book1.getTitle())) {
+                            book1.setCollection(true);
+                            Log.d("AAA", "setCollection     " + book1.getTitle() + "  is collection");
+                        }
+                    }
+                }
+                bookList = books;
+                handler.sendEmptyMessage(REFRESH_BOOKLIST_FC);
+            }
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void findViews(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.goodbook_rcv);
         swipeRL = (SwipeRefreshLayout) view.findViewById(R.id.goodbook_swp);
@@ -128,6 +205,5 @@ public class GoodBookFragment extends Fragment {
         this.bookList = list;
         goodBookAdapter.refreshData(bookList);
     }
-
 
 }

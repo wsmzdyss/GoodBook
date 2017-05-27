@@ -70,8 +70,9 @@
                 android:layout_margin="8dp"
                 app:angleAnimationDurationMillis="@integer/circular_default_angleAnimationDurationMillis"
                 app:borderWidth="@dimen/circular_default_border_width"
-                app:colorSequence="@array/circular_default_color_sequence"
+                app:colorSequence="@array/red_color_sequence"
                 app:sweepAnimationDurationMillis="@integer/circular_default_sweepAnimationDuration"/>
+
         </RelativeLayout>
     </RelativeLayout>
 
@@ -92,6 +93,7 @@
                 android:id="@+id/icon_main"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/icon"/>
 
             <TextView
@@ -145,6 +147,15 @@
                 android:background="@drawable/button_selector"
                 android:text="编辑"
                 android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="20dp"
+                android:background="@color/red"/>
+
         </RelativeLayout>
 
         <FrameLayout

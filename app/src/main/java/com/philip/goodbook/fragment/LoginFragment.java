@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.philip.goodbook.R;
 import com.philip.goodbook.model.User;
 import com.philip.goodbook.network.GoodBookService;
 import com.philip.goodbook.utils.Constants;
+import com.philip.goodbook.utils.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +32,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class LoginFragment extends Fragment {
+
     private EditText username;
 
     private EditText password;
@@ -47,33 +50,39 @@ public class LoginFragment extends Fragment {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final User user = new User();
-                user.setUsername(username.getText().toString().trim());
-                user.setPassword(password.getText().toString().trim());
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory
-                                (GsonConverterFactory.create())
-                        .build();
-                GoodBookService goodBookService = retrofit.create(GoodBookService.class);
-                Call<String> call = goodBookService.login(user);
+                String usernameStr = username.getText().toString().trim();
+                String passwordStr = password.getText().toString().trim();
+                if (TextUtils.isEmpty(usernameStr) || TextUtils.isEmpty(passwordStr)) {
+                    ToastUtil.showToast(getActivity(), "用户名或密码为空");
+                } else {
+                    final User user = new User();
+                    user.setUsername(username.getText().toString().trim());
+                    user.setPassword(password.getText().toString().trim());
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory
+                                    (GsonConverterFactory.create())
+                            .build();
+                    GoodBookService goodBookService = retrofit.create(GoodBookService.class);
+                    Call<String> call = goodBookService.login(user);
 
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Log.d("AAA", "LoginFragment   response ===   " + response.body());
-                        if (response.body().equals("success")) {
-                            Intent intent = new Intent(mActivity, MainActivity.class);
-                            intent.putExtra("username",user.getUsername());
-                            startActivity(intent);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.d("AAA", "LoginFragment   response ===   " + response.body());
+                            if (response.body().equals("success")) {
+                                Intent intent = new Intent(mActivity, MainActivity.class);
+                                intent.putExtra("username", user.getUsername());
+                                startActivity(intent);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.d("AAA", "LoginFragment   onFailure   " + t.getMessage());
-                    }
-                });
-
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("AAA", "LoginFragment   onFailure   " + t.getMessage());
+                            ToastUtil.showToast(getActivity(), "用户名或密码错误");
+                        }
+                    });
+                }
             }
         });
         return view;

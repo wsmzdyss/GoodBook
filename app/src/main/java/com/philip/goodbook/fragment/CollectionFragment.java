@@ -3,6 +3,8 @@ package com.philip.goodbook.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,10 +19,12 @@ import com.philip.goodbook.MainActivity;
 import com.philip.goodbook.R;
 import com.philip.goodbook.adapter.GoodBookAdapter;
 import com.philip.goodbook.model.Book;
+import com.philip.goodbook.model.User;
 import com.philip.goodbook.network.GoodBookService;
 import com.philip.goodbook.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,6 +50,25 @@ public class CollectionFragment extends Fragment {
 
     public GoodBookAdapter collectionAdapter;
 
+    private final static int REFRESH_COLLECTION = 0;
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d("TAG", "what = : " + msg.what);
+            switch (msg.what) {
+                case REFRESH_COLLECTION:
+                    List<Book> books = (List<Book>) msg.obj;
+                    collectionAdapter.refreshData(books);
+                    swipeRL.setRefreshing(false);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -61,25 +84,7 @@ public class CollectionFragment extends Fragment {
         swipeRL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //handler.sendEmptyMessage(0);
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initData();
-                                collectionAdapter.notifyDataSetChanged();
-                                swipeRL.setRefreshing(false);
-                            }
-                        });
-                    }
-                }).start();
+                getCollectionFromDB(mActivity.username);
             }
         });
         collectionAdapter = new GoodBookAdapter(mActivity, bookList);
@@ -127,7 +132,13 @@ public class CollectionFragment extends Fragment {
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 Log.d("AAA", "QueryCollection    response ===  " + response.body().toString());
                 List<Book> books = response.body();
-                collectionAdapter.refreshData(books);
+                for (Book book : books) {
+                    book.setCollection(true);
+                }
+                Message msg = Message.obtain();
+                msg.what = REFRESH_COLLECTION;
+                msg.obj = books;
+                handler.sendMessage(msg);
             }
 
             @Override

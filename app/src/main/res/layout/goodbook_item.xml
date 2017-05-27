@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/item_gd_sub"
+            android:layout_toLeftOf="@+id/textView"
             android:layout_alignStart="@+id/item_gd_sub"
             android:lines="1"
             android:padding="@dimen/item_text_padding"

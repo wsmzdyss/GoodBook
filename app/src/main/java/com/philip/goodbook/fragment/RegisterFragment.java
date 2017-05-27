@@ -15,6 +15,7 @@ import com.philip.goodbook.R;
 import com.philip.goodbook.model.User;
 import com.philip.goodbook.network.GoodBookService;
 import com.philip.goodbook.utils.Constants;
+import com.philip.goodbook.utils.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,28 +46,36 @@ public class RegisterFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = new User();
-                user.setNickname(nickname.getText().toString().trim());
-                user.setUsername(username.getText().toString().trim());
-                user.setPassword(password.getText().toString().trim());
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory
-                        (GsonConverterFactory.create())
-                        .build();
-                GoodBookService goodBookService = retrofit.create(GoodBookService.class);
-                Call<String> call = goodBookService.register(user);
+                String nicknameStr = nickname.getText().toString().trim();
+                String usernameStr = username.getText().toString().trim();
+                String passwordStr = password.getText().toString().trim();
+                if (TextUtils.isEmpty(usernameStr) || TextUtils.isEmpty(passwordStr)) {
+                    ToastUtil.showToast(getActivity(), "用户名或密码为空");
+                } else {
+                    User user = new User();
+                    user.setNickname(nicknameStr);
+                    user.setUsername(usernameStr);
+                    user.setPassword(passwordStr);
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.baseUrl).addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory
+                                    (GsonConverterFactory.create())
+                            .build();
+                    GoodBookService goodBookService = retrofit.create(GoodBookService.class);
+                    Call<String> call = goodBookService.register(user);
 
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Log.d("AAA", "RegisterFragment   response ===   " + response.body());
-                    }
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.d("AAA", "RegisterFragment   response ===   " + response.body());
+                        }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.d("AAA", "RegisterFragment   onFailure   " + t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("AAA", "RegisterFragment   onFailure   " + t.getMessage());
+                        }
 
+                    });
+                }
             }
         });
         return view;
